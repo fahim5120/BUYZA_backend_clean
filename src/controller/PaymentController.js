@@ -1,7 +1,7 @@
 const OrderService = require("../service/OrderService");
 const PaymentService = require("../service/PaymentService");
 const SellerReportService = require("../service/SellerReportService");
-const { getSellerById } = require("../service/sellerService");
+const { getSellerById } = require("../service/SellerService");
 const TransactionService = require("../service/TransactionService");
 
 
