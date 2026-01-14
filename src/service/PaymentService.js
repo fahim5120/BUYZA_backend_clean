@@ -97,7 +97,7 @@ class PaymentService {
                 notify: {
                     email: true
                 },
-                callback_url: `http://localhost:5173/payment-success/${orderId}`,
+                callback_url: `${process.env.CLIENT_URL}/payment-success/${orderId}`,
                 callback_method: 'get'
             };
 
@@ -175,8 +175,8 @@ async createStripePaymentLink(user, amount, orderId) {
         },
       ],
 
-      success_url: `http://localhost:5173/payment-success/${orderId}`,
-      cancel_url: `http://localhost:5173/payment-cancel`,
+      success_url:`${process.env.CLIENT_URL}/payment-success/${orderId}`,
+      cancel_url:  `${process.env.CLIENT_URL}/payment-cancel`,
     });
 
     return session.url;
