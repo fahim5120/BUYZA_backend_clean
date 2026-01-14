@@ -15,7 +15,7 @@ app.get("/",(req,res)=>{
 //     credentials: true,}
 // ))
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: *,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
