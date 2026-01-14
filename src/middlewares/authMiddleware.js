@@ -1,4 +1,4 @@
-const { getSellerByEmail } = require("../service/sellerService");
+const { getSellerByEmail } = require("../service/SellerService");
 const { findUserByEmail } = require("../service/userService");
 const { getEmailFromJwt } = require("../util/jwtProvider");
 
