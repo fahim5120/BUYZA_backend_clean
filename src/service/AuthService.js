@@ -2,7 +2,7 @@ const Seller = require("../modal/Seller");
 
 
 const { sendVerificationEmail } = require("../util/sendEmai");
-const { getSellerByEmail } = require("./sellerService");
+
 const { generateOTP } = require("../util/generateOtp");
 const User = require("../modal/User");
 const bcrypt = require("bcrypt");
