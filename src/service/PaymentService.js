@@ -79,7 +79,7 @@ class PaymentService {
 
    async createRazorpayPaymentLink(user, amount, orderId) {
      const   apiKey=process.env.RAZORPAY_KEY_ID;
-     const   apiSecret=RAZORPAY_KEY_SECRET;
+     const   apiSecret= process.env.RAZORPAY_KEY_SECRET;
         
         
         const razorpays = new Razorpay({
