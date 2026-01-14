@@ -6,7 +6,7 @@ const {
   deleteSeller,
   updateSellerStatus,
   getSellerByEmail,
-} = require("../service/sellerService");
+} = require("../service/SellerService");
 const Seller = require("../modal/Seller");
 const VerificationCode = require("../modal/VerificationCode");
 const { createJwt } = require("../util/jwtProvider");
