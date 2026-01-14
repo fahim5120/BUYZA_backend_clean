@@ -1,0 +1,12 @@
+[33m9b6491d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: reset: moving to origin/main
+[33m0206f7e[m HEAD@{1}: checkout: moving from main to main
+[33m0206f7e[m HEAD@{2}: commit: Move payment credentials to environment variables
+[33m560e01c[m HEAD@{3}: commit: Move admin credentials to environment variables
+[33m4177b85[m HEAD@{4}: commit: updated the issue of authentication
+[33m9b6491d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{5}: commit: updated the codes of verify otp
+[33meb9a675[m HEAD@{6}: commit: completed home section
+[33m2726817[m HEAD@{7}: commit: completed the payment section
+[33m5ed4a59[m HEAD@{8}: commit: order section completed
+[33mbddcf5a[m HEAD@{9}: commit: compelted produt section
+[33mc4dcf5f[m HEAD@{10}: Branch: renamed refs/heads/master to refs/heads/main
+[33mc4dcf5f[m HEAD@{12}: commit (initial): completed authentication of seller, user and admin
