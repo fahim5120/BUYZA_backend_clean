@@ -149,12 +149,19 @@ exports.createUser = async (req) => {
 exports.signin = async (req) => {
   const { email, otp } = req;
 
+  console.log("🔐 SIGNIN HIT");
+  console.log("📩 EMAIL:", email);
+  console.log("🔢 OTP FROM CLIENT:", otp);
+
   const user = await User.findOne({ email });
+  console.log("👤 USER FROM DB:", user);
+
   if (!user) {
     throw new Error("User not found with email");
   }
 
   const VerificationCode = await verificationCode.findOne({ email });
+  console.log("🧾 OTP FROM DB:", VerificationCode);
 
   if (!VerificationCode || VerificationCode.otp !== otp) {
     throw new Error("Invalid OTP");
@@ -163,12 +170,17 @@ exports.signin = async (req) => {
   // ✅ OTP DELETE AFTER SUCCESS
   await verificationCode.deleteOne({ email });
 
-  return {
+  const response = {
     message: "Login Success",
     jwt: createJwt({ email }),
     role: user.role,
   };
+
+  console.log("✅ SIGNIN RESPONSE SENT:", response);
+
+  return response;
 };
+
 
 
 
