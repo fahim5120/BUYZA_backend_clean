@@ -35,11 +35,11 @@ const { findUserByEmail } = require("./userService");
 //   const body = `Your login OTP is - ${otp} please enter it to complete process`;
 //   await sendVerificationEmail(email, subject, body);
 // };
-
 exports.sendLoginOTP = async (email) => {
   const SIGNING_PREFIX = "signin_";
   let actualEmail = email;
 
+  // 🔹 identify actual login email
   if (email.startsWith(SIGNING_PREFIX)) {
     actualEmail = email.substring(SIGNING_PREFIX.length);
 
@@ -52,24 +52,38 @@ exports.sendLoginOTP = async (email) => {
     if (!user) throw new Error("User not found");
   }
 
-  const existingVerificationCode =
-    await verificationCode.findOne({ email: actualEmail });
+  // 🔹 remove old OTP
+  await verificationCode.deleteOne({ email: actualEmail });
 
-  if (existingVerificationCode) {
-    await verificationCode.deleteOne({ email: actualEmail });
-  }
-
+  // 🔹 generate OTP
   const otp = generateOTP();
+
   console.log("✅ OTP GENERATED:", otp);
-  console.log("📧 OTP EMAIL:", actualEmail);
+  console.log("📧 LOGIN EMAIL (DB):", actualEmail);
+  console.log("📨 OTP WILL BE SENT TO: muhdfahim786@gmail.com");
 
-  await verificationCode.create({ otp, email: actualEmail });
+  // 🔹 save OTP in DB (IMPORTANT)
+  await verificationCode.create({
+    otp,
+    email: actualEmail,
+  });
 
-  const subject = "Buyza Login/Signup OTP";
-  const body = `Your login OTP is - ${otp}`;
+  // 🔹 send OTP MAIL (ONLY TO YOU)
+  const subject = "Buyza OTP (DEV MODE)";
+  const body = `OTP for ${actualEmail} is ${otp}`;
 
-  await sendVerificationEmail(actualEmail, subject, body);
+  try {
+    await sendVerificationEmail(
+      "muhdfahim786@gmail.com", // 👈 ALWAYS YOUR EMAIL
+      subject,
+      body
+    );
+  } catch (err) {
+    console.error("❌ MAIL ERROR:", err.message);
+    // OTP already saved, so do NOT throw error
+  }
 };
+
 
 
 
