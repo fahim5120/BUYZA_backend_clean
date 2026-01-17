@@ -1,30 +1,19 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+
+const resend = new Resend('re_PD7oXqaA_KQvNGCZLvcJwZpW993zh6LJr');
 
 exports.sendVerificationEmail = async (to, subject, body) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",        // ✅ ADD
-      port: 465,                     // ✅ ADD
-      secure: true,                  // ✅ ADD
-      auth: {
-        user: "muhdfahim786@gmail.com",
-        pass: "dlhgrgklfcxljtxa",     // app password
-      },
-      connectionTimeout: 100000,      // ✅ 
+    await resend.emails.send({
+      from: "Buyza <onboarding@resend.dev>",
+      to: "muhdfahim786@gmail.com", // ✅ ALWAYS YOUR EMAIL
+      subject,
+      html: `<p>${body}</p>`,
     });
 
-    const mailOptions = {
-      from: "Buyza <muhdfahim786@gmail.com>",
-      to,
-      subject,
-      text: body,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    console.log("✅ TEST OTP MAIL SENT TO muhdfahim786@gmail.com");
-  } catch (err) {
-    console.error("❌ MAIL ERROR:", err.message);
-    throw err; // 🔥 VERY IMPORTANT (nee already correct cheythu 👍)
+    console.log("✅ OTP MAIL SENT USING RESEND");
+  } catch (error) {
+    console.error("❌ RESEND MAIL ERROR:", error.message);
+    throw error;
   }
 };
