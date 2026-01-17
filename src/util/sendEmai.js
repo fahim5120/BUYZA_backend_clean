@@ -6,7 +6,7 @@ exports.sendVerificationEmail=async(to,subject,body)=>{
         auth: {
             user: "muhdfahim786@gmail.com",
             // pass: process.env.EMAIL_PASS
-               pass: dlhgrgklfcxljtxa
+               pass: "dlhgrgklfcxljtxa"
         }
       })
 
