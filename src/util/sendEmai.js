@@ -10,12 +10,12 @@ exports.sendVerificationEmail = async (to, subject, body) => {
         user: "muhdfahim786@gmail.com",
         pass: "dlhgrgklfcxljtxa",     // app password
       },
-      connectionTimeout: 20000,      // ✅ ADD (20s)
+      connectionTimeout: 100000,      // ✅ 
     });
 
     const mailOptions = {
       from: "Buyza <muhdfahim786@gmail.com>",
-      to,  // ✅ ALWAYS YOUR EMAIL
+      to,
       subject,
       text: body,
     };
