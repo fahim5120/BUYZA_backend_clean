@@ -3,21 +3,21 @@ const { sendLoginOTP, createUser, signin } = require("../service/AuthService");
 
 exports.sentLoginOtp = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, mode } = req.body;   // ✅ mode get
 
-    await sendLoginOTP(email);
+    await sendLoginOTP(email, mode);    // ✅ pass mode
 
     return res.status(200).json({
       message: "otp sent successfully",
     });
   } catch (error) {
     console.error("OTP ERROR:", error.message);
-
     return res.status(400).json({
-      message: error.message || "Failed to send OTP",
+      message: error.message,
     });
   }
 };
+
 
 
     exports.createUser=async(req, res)=> {
