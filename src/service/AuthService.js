@@ -43,8 +43,8 @@ exports.sendLoginOTP = async (email) => {
   if (email.startsWith(SIGNING_PREFIX)) {
     actualEmail = email.substring(SIGNING_PREFIX.length);
 
-    const seller = await Seller.findOne({email: actualEmail})
-    const user = await User.findOne({email: actualEmail})
+    const seller = await Seller.findOne({ email: actualEmail });
+    const user = await User.findOne({ email: actualEmail });
 
     if (!seller && !user) {
       throw new Error("User not found");
@@ -59,6 +59,11 @@ exports.sendLoginOTP = async (email) => {
   }
 
   const otp = generateOTP();
+
+  // 🔴 DEBUG LOGS (IMPORTANT)
+  console.log("✅ OTP GENERATED:", otp);
+  console.log("📧 OTP EMAIL:", actualEmail);
+
   const VerificationCode = new verificationCode({
     otp,
     email: actualEmail,
@@ -67,8 +72,10 @@ exports.sendLoginOTP = async (email) => {
 
   const subject = "Buyza Login/Signup OTP";
   const body = `Your login OTP is - ${otp} please enter it to complete process`;
+
   await sendVerificationEmail(actualEmail, subject, body);
 };
+
 
 
 exports.createUser = async (req) => {
