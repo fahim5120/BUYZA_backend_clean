@@ -1,17 +1,24 @@
 const UserRoles = require("../domain/UserRole");
 const { sendLoginOTP, createUser, signin } = require("../service/AuthService");
 
-exports.sentLoginOtp=async(req, res)=> {
-        try {
-            const email = req.body.email; 
-            await sendLoginOTP(email);
+exports.sentLoginOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
 
-            return res.status(200).json({ message: "otp sent successfully" });
-        } catch (error) {
-           res.status(error instanceof Error ?400:500)
-           .json({message:error.message})
-        }
-    }
+    await sendLoginOTP(email);
+
+    return res.status(200).json({
+      message: "otp sent successfully",
+    });
+  } catch (error) {
+    console.error("OTP ERROR:", error.message);
+
+    return res.status(400).json({
+      message: error.message || "Failed to send OTP",
+    });
+  }
+};
+
 
     exports.createUser=async(req, res)=> {
         try {
