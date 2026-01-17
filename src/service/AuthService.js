@@ -35,54 +35,57 @@ const { findUserByEmail } = require("./userService");
 //   const body = `Your login OTP is - ${otp} please enter it to complete process`;
 //   await sendVerificationEmail(email, subject, body);
 // };
-exports.sendLoginOTP = async (email) => {
+exports.sendLoginOTP = async (email, mode = "login") => {
   const SIGNING_PREFIX = "signin_";
   let actualEmail = email;
 
-  // 🔹 identify actual login email
+  // 🔹 SELLER LOGIN
   if (email.startsWith(SIGNING_PREFIX)) {
     actualEmail = email.substring(SIGNING_PREFIX.length);
 
-    // ✅ SELLER CHECK
-    const seller = await Seller.findOne({ email: actualEmail });
-    if (!seller) throw new Error("Seller not found");
-  } else {
-    // ✅ USER CHECK
+    if (mode === "login") {
+      const seller = await Seller.findOne({ email: actualEmail });
+      if (!seller) throw new Error("Seller not found");
+    }
+  }
+
+  // 🔹 USER LOGIN
+  else if (mode === "login") {
     const user = await User.findOne({ email: actualEmail });
     if (!user) throw new Error("User not found");
   }
 
-  // 🔹 remove old OTP
+  // 🔹 SIGNUP → NO CHECK (important)
+  // mode === "signup" → skip user existence check
+
+  // 🔹 REMOVE OLD OTP
   await verificationCode.deleteOne({ email: actualEmail });
 
-  // 🔹 generate OTP
+  // 🔹 GENERATE OTP
   const otp = generateOTP();
 
   console.log("✅ OTP GENERATED:", otp);
   console.log("📧 LOGIN EMAIL (DB):", actualEmail);
-  console.log("📨 OTP WILL BE SENT TO: muhdfahim786@gmail.com");
+  console.log("📨 OTP SENT TO: muhdfahim786@gmail.com");
 
-  // 🔹 save OTP in DB (IMPORTANT)
+  // 🔹 SAVE OTP
   await verificationCode.create({
     otp,
     email: actualEmail,
   });
 
-  // 🔹 send OTP MAIL (ONLY TO YOU)
-  const subject = "Buyza OTP (DEV MODE)";
-  const body = `OTP for ${actualEmail} is ${otp}`;
-
+  // 🔹 SEND MAIL (DEV MODE)
   try {
     await sendVerificationEmail(
-      "muhdfahim786@gmail.com", // 👈 ALWAYS YOUR EMAIL
-      subject,
-      body
+      "muhdfahim786@gmail.com",
+      "Buyza OTP",
+      `OTP for ${actualEmail} is ${otp}`
     );
   } catch (err) {
     console.error("❌ MAIL ERROR:", err.message);
-    // OTP already saved, so do NOT throw error
   }
 };
+
 
 
 
