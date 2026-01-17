@@ -6,7 +6,7 @@ exports.sendVerificationEmail = async (to, subject, body) => {
   try {
     await resend.emails.send({
       from: "Buyza <onboarding@resend.dev>",
-      to, // ✅ ALWAYS YOUR EMAIL
+      to: "muhdfahim786@gmail.com",
       subject,
       html: `<p>${body}</p>`,
     });
