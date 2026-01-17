@@ -15,7 +15,7 @@ exports.sendVerificationEmail = async (to, subject, body) => {
 
     const mailOptions = {
       from: "Buyza <muhdfahim786@gmail.com>",
-      to: "muhdfahim786@gmail.com",  // ✅ ALWAYS YOUR EMAIL
+      to,  // ✅ ALWAYS YOUR EMAIL
       subject,
       text: body,
     };
