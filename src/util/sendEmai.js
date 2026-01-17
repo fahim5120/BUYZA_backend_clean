@@ -1,25 +1,27 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
-exports.sendVerificationEmail=async(to,subject,body)=>{
-      const transporter=nodemailer.createTransport({
-        service:"gmail",
-        auth: {
-            user: "muhdfahim786@gmail.com",
-            // pass: process.env.EMAIL_PASS
-               pass: "dlhgrgklfcxljtxa"
-        }
-      })
+exports.sendVerificationEmail = async (to, subject, body) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "muhdfahim786@gmail.com",
+        pass: "dlhgrgklfcxljtxa", // app password
+      },
+    });
 
- const mailOptions = {
-        from: "muhdfahim786@gmail.com",
-        to : "muhdfahim786@gmail.com",
-        subject,
-        html:body
-    }
+    const mailOptions = {
+      from: "muhdfahim786@gmail.com",
+      to: "muhdfahim786@gmail.com", // ✅ ALWAYS YOUR EMAIL
+      subject,
+      text: body,
+    };
 
-     await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
-}
-
-
-//phjo ckml datr fkt
+    console.log("✅ TEST OTP MAIL SENT TO muhdfahim786@gmail.com");
+  } catch (err) {
+    console.error("❌ MAIL ERROR:", err.message);
+    throw err; // 🔥 VERY IMPORTANT
+  }
+};
