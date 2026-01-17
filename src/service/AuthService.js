@@ -70,7 +70,7 @@ exports.sendLoginOTP = async (email) => {
 
   await sendVerificationEmail(actualEmail, subject, body);
 };
-;
+
 
 
 
